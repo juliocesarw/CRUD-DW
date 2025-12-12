@@ -10,6 +10,11 @@
 
     <ul class="nav nav-tabs justify-content-start">
       <li class="nav-item">
+        <span class="nav-link fw-bold text-primary border-0 pe-4" style="font-size: 1.2rem;">
+          TaskCenter
+        </span>
+      </li>
+      <li class="nav-item">
         <a class="nav-link "  href="index.html">Home</a>
       </li>
       <li class="nav-item">
@@ -20,12 +25,13 @@
     <div class="container mt-4 rounded shadow">
         <div class="row p-4">
             <div class="col-12">
-                <form action="index.html">
+                <form action="listagem.html">
+                    
                     <label for="inputNome" class="form-label">Nome</label>
-                    <input class="form-control" type="text" id="inputNome">
+                    <input class="form-control" type="text" id="inputNome" name="nome">
                     
                     <label for="inputData" class="form-label">Data</label>
-                    <input class="form-control" type="datetime-local" id="inputData">
+                    <input class="form-control" type="datetime-local" id="inputData" name="data">
     
                     <label for="inputPrioridade" class="form-label">Prioridade</label>
                     <select class="form-select" name="inputPrioridade" id="inputPrioridade">
@@ -34,11 +40,13 @@
                         <option value="Média">Média</option>
                         <option value="Alta">Alta</option>
                     </select>
+
+                    <div class="col-12 mt-4">
+                        <button class="btn btn-primary me-4" type="submit">Editar</button>
+                        
+                        <a href="listagem.html" class="btn btn-danger">Cancelar</a>
+                    </div>
                 </form>
-            </div>
-            <div class="col-12 mt-4">
-                <button class="btn btn-primary me-4" type="submit">Editar</button>
-                <button class="btn btn-danger" type="submit">Cancelar</button>
             </div>
         </div>
     </div>
@@ -46,11 +54,14 @@
     <script>
         const params = new URLSearchParams(window.location.search);
 
-const row = params.get("row");
-document.getElementById("inputNome").value = params.get("nome");
-document.getElementById("inputData").value = params.get("data");
-document.getElementById("inputPrioridade").value = params.get("prioridade");
-
+        const row = params.get("row");
+        // Verifica se os parametros existem antes de tentar preencher para evitar erros
+        if(params.has("nome")) document.getElementById("inputNome").value = params.get("nome");
+        if(params.has("data")) document.getElementById("inputData").value = params.get("data");
+        if(params.has("prioridade") || params.has("inputPrioridade")) {
+            // Ajuste para pegar 'prioridade' ou 'inputPrioridade' dependendo de como veio da listagem
+            document.getElementById("inputPrioridade").value = params.get("prioridade") || params.get("inputPrioridade");
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
